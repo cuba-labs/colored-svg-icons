@@ -10,16 +10,17 @@ public class ExtAppMainWindow extends AppMainWindow {
     @Inject
     private Button demoBtn;
 
-    public static final String GENERATED_SVG_PATH = "../../../dispatch/svggen?icon=%s&color=%s&v";
+    public static final String GENERATED_SVG_PATH =
+            "../../../dispatch/svggen?icon=%s&primaryColor=%s&secondaryColor=%s&";
 
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
 
-        demoBtn.setIcon(getSvgIcon("app", "blue"));
+        demoBtn.setIcon(getSvgIcon("app", "blue", "green"));
     }
 
-    public String getSvgIcon(String icon, String color) {
-        return String.format(GENERATED_SVG_PATH, icon, color);
+    public String getSvgIcon(String icon, String primaryColor, String secondaryColor) {
+        return String.format(GENERATED_SVG_PATH, icon, primaryColor, secondaryColor);
     }
 }

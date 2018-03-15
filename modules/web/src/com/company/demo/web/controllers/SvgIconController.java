@@ -20,17 +20,20 @@ import java.util.Set;
 public class SvgIconController {
     public static final String IMAGE_SVG_CONTENT_TYPE = "image/svg+xml";
 
+    public static final String PRIMARY_COLOR = "magenta";
+    public static final String SECONDARY_COLOR = "purple";
+
     @Inject
     private Logger log;
     @Inject
     private Resources resources;
 
-    public static final String PRIMARY_COLOR = "magenta";
-
+    // Supported icons
     public static final Map<String, String> icons = ImmutableMap.of(
-        "app", "/com/company/demo/web/controllers/sample-icon.svg"
+            "app", "/com/company/demo/web/controllers/sample-icon.svg"
     );
 
+    // Supported colors
     public static final Set<String> colors = Sets.newHashSet(
             "blue",
             "black",
@@ -39,10 +42,14 @@ public class SvgIconController {
 
     @RequestMapping("svggen")
     @ResponseBody
-    public ResponseEntity<String> getIcon(@RequestParam(name = "icon") String iconName,
-                                  @RequestParam(name = "color") String color) {
-        if (!colors.contains(color)) {
-            log.debug("Unsupported color {}", color);
+    public ResponseEntity<String> getIcon(
+            @RequestParam(name = "icon") String iconName,
+            @RequestParam(name = "primaryColor") String primaryColor,
+            @RequestParam(name = "secondaryColor") String secondaryColor) {
+
+        if (!colors.contains(primaryColor)
+                || !colors.contains(secondaryColor)) {
+            log.debug("Unsupported primaryColor {}", primaryColor);
 
             return ResponseEntity.notFound().build();
         }
@@ -62,7 +69,9 @@ public class SvgIconController {
         }
 
         // you can replace
-        String iconSvgContentWithColor = iconSvgContent.replace(PRIMARY_COLOR, color);
+        String iconSvgContentWithColor = iconSvgContent
+                .replace(PRIMARY_COLOR, primaryColor)
+                .replace(SECONDARY_COLOR, secondaryColor);
 
         // return content with cache options
         return ResponseEntity.ok()

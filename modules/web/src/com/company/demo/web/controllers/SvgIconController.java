@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import com.haulmont.cuba.core.global.Resources;
 import org.slf4j.Logger;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.inject.Inject;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class SvgIconController {
@@ -75,7 +77,7 @@ public class SvgIconController {
 
         // return content with cache options
         return ResponseEntity.ok()
-                .header(HttpHeaders.CACHE_CONTROL, "max-age=3600")
+                .cacheControl(CacheControl.maxAge(3600, TimeUnit.SECONDS))
                 .header(HttpHeaders.PRAGMA, "cache")
                 .header(HttpHeaders.EXPIRES, String.valueOf(System.currentTimeMillis() + 3600))
                 .contentType(MediaType.valueOf(IMAGE_SVG_CONTENT_TYPE))

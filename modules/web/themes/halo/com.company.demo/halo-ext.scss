@@ -1,0 +1,9 @@
+/* Define your theme modifications inside next mixin */
+@mixin com_company_demo-halo-ext {
+  .v-button .svg-icon {
+    .v-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

@@ -1,9 +1,36 @@
 /* Define your theme modifications inside next mixin */
 @mixin com_company_demo-halo-ext {
-  .v-button.svg-icon {
+
+  .v-label.svg-icon,
+  .v-button.svg-icon,
+  .v-caption-inline-icon {
     .v-icon {
       width: 16px;
       height: 16px;
+    }
+  }
+
+  // Support icon in PickerField
+  .inline-icon input {
+    padding-left: $v-unit-size;
+  }
+
+  .c-pickerfield-layout {
+    position: relative;
+  }
+
+  // Fix position of icon in FieldGroup
+  .c-fglayout-slot .v-caption-c-pickerfield-text.v-caption-inline-icon {
+    display: inline-block;
+    position: absolute;
+  }
+  
+  // Fix border-radius
+  .c-pickerfield-layout {
+    & .ie9-input-wrap input,
+    & input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 }

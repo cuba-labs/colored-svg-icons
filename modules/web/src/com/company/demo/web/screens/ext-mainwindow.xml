@@ -4,15 +4,48 @@
         extends="/com/haulmont/cuba/web/app/mainwindow/mainwindow.xml"
         messagesPack="com.company.demo.web.screens"
         xmlns:main="http://schemas.haulmont.com/cuba/mainwindow.xsd">
+
+    <dsContext>
+        <collectionDatasource id="usersDs" class="com.haulmont.cuba.security.entity.User"
+                              view="user.browse">
+            <query>
+                <![CDATA[
+                select u from sec$User u
+                ]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+
     <dialogMode height="600"
                 width="800"/>
     <layout>
         <split id="foldersSplit">
             <main:workArea id="workArea">
-                <main:initialLayout>
+                <main:initialLayout expand="spacer">
                     <button id="demoBtn"
                             stylename="svg-icon"
                             caption="SVG Icon"/>
+
+                    <pickerField id="pickerFieldSingle"
+                                 metaClass="sec$User"/>
+
+                    <fieldGroup>
+                        <field id="demo" caption="Demo">
+                            <pickerField id="pickerField"
+                                         metaClass="sec$User"/>
+                        </field>
+                    </fieldGroup>
+
+                    <table id="usersTable" width="400px" height="200px">
+                        <columns>
+                            <column id="login"/>
+                            <column id="name"/>
+                            <column id="group"/>
+                        </columns>
+                        <rows datasource="usersDs"/>
+                    </table>
+
+                    <label id="spacer"/>
                 </main:initialLayout>
             </main:workArea>
         </split>
